@@ -1,0 +1,20 @@
+{
+  "name": "3d",
+  "version": "0.0.0",
+  "description": "cannon.js + regl + matrix3d",
+  "scripts": {
+    "example": "cd example && dev"
+  },
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "gl-mat4": "^1.1.4",
+    "gl-quat": "^1.0.0",
+    "gl-vec3": "^1.0.3",
+    "regl": "^1.1.1"
+  },
+  "devDependencies": {
+    "dev": "github:jessetane/dev#3.1.0"
+  },
+  "author": "jesse.tane@gmail.com",
+  "license": "MIT"
+}
