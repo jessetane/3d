@@ -21,8 +21,6 @@ var Object3d = require('3d/object')
 var Camera3d = require('3d/camera')
 var ReglRenderer = require('3d/regl-renderer')
 var DomRenderer = require('3d/dom-renderer')
-var quat = { rotationTo: require('gl-quat/rotationTo') }
-var vec3 = { normalize: require('gl-vec3/normalize') }
 
 class Thing extends Object3d {
   constructor () {
