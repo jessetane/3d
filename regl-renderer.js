@@ -1,6 +1,7 @@
 var Regl = require('regl')
 var Dynamic = require('regl/lib/dynamic')
 var mat4 = { copy: require('gl-mat4/copy') }
+var E = require('./e')
 
 var reglProp = Dynamic.define.bind(null, 1)
 var reglThis = Dynamic.define.bind(null, 3)
@@ -71,7 +72,7 @@ module.exports = class ReglRenderer {
     var scale = projection[0]
     projection[0] = camera.fitDimension === 'width' ? scale : scale * camera.aspect
     projection[5] = camera.fitDimension === 'width' ? scale * camera.aspect : scale
-    projection[10] = 0
+    projection[10] = -E.value
 
     var vantagePoint = camera.vantagePoint
 
