@@ -30,6 +30,11 @@ module.exports = class Scene3d extends World {
     if (object.renderers) {
       this.cameras = this.cameras.filter(camera => camera != object)
     }
+    this.cameras.forEach(camera => {
+      camera.renderers.forEach(renderer => {
+        renderer.removeObject(object)
+      })
+    })
     this.removeBody(object)
   }
 

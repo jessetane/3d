@@ -73,6 +73,9 @@ module.exports = class Camera3d extends Object3d {
   }
 
   removeRenderer (renderer) {
+    if (this.scene) {
+      this.scene.objects.forEach(object => render.removeObject(object))
+    }
     this.renderers = this.renderers.filter(r => r !== renderer)
   }
 

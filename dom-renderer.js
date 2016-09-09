@@ -15,7 +15,7 @@ module.exports = class DomRenderer {
     el.style.mozTransformStyle = 'preserve-3d'
     el.style.webkitTransformStyle = 'preserve-3d'
     this.el = el
-    this.elements = {}
+    this.elements = new Map()
     this.cameraTransform = []
     this.objectTransform = []
     this.projection = []
@@ -27,7 +27,7 @@ module.exports = class DomRenderer {
     this.height = this.el.offsetHeight
   }
 
-  setupElement (object) {
+  addObject (object) {
     var el = object.el
     el.style.position = 'absolute'
     el.style.top = '50%'
@@ -36,8 +36,13 @@ module.exports = class DomRenderer {
     el.style.mozTransformStyle = 'preserve-3d'
     el.style.webkitTransformStyle = 'preserve-3d'
     this.el.appendChild(el)
-    this.elements[object.id] = el
-    return el
+    this.elements.set(object, el)
+  }
+
+  removeObject (object) {
+    var el = this.elements.get(object)
+    this.elements.delete(object)
+    if (el) el.remove()
   }
 
   render (camera) {
@@ -56,7 +61,11 @@ module.exports = class DomRenderer {
 
     camera.scene.objects.forEach(object => {
       if (!object.el) return
-      var el = this.elements[object.id] || this.setupElement(object)
+      var el = this.elements.get(object)
+      if (!el) {
+        this.addObject(object)
+        el = this.elements.get(object)
+      }
 
       var t = mat4.copy(this.objectTransform, object.domTransform || object.transform)
       t[12] *= pixelsPerUnit

@@ -13,7 +13,6 @@ module.exports = class Object3d extends Body {
     this.pointerDown = this.pointerDown.bind(this)
     this.pointerMove = this.pointerMove.bind(this)
     this.pointerUp = this.pointerUp.bind(this)
-    this.id = Math.random().toString(16).slice(2)
     this._origin = []
     this._rotation = []
     this.transform = []

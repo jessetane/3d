@@ -54,7 +54,7 @@ module.exports = class ReglRenderer {
     canvas.style.height = '100%'
     this.canvas = canvas
     this.regl = Regl(canvas)
-    this.drawCalls = {}
+    this.drawCalls = new Map()
     this.projection = []
   }
 
@@ -66,10 +66,13 @@ module.exports = class ReglRenderer {
     this.canvas.height = this.height * dpr
   }
 
-  setupDrawCall (object) {
+  addObject (object) {
     var draw = this.regl(object.reglOpts)
-    this.drawCalls[object.id] = draw
-    return draw
+    this.drawCalls.set(object, draw)
+  }
+
+  removeObject (object) {
+    this.drawCalls.delete(object)
   }
 
   render (camera) {
@@ -89,7 +92,12 @@ module.exports = class ReglRenderer {
 
     camera.scene.objects.forEach(object => {
       if (!object.reglOpts) return
-      var draw = this.drawCalls[object.id] || this.setupDrawCall(object)
+      var draw = this.drawCalls.get(object)
+      if (!draw) {
+        this.addObject(object)
+        draw = this.drawCalls.get(object)
+      }
+
       draw.call(object, { projection, vantagePoint })
     })
   }
