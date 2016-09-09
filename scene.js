@@ -64,13 +64,7 @@ module.exports = class Scene3d extends World {
       time - this.time,
       this.maxSubSteps
     )
-    this.cameras = []
-    this.objects.forEach(object => {
-      object.update()
-      if (object.renderers) {
-        this.cameras.push(object)
-      }
-    })
+    this.objects.forEach(object => object.update())
     this.cameras.forEach(camera => camera.render())
   }
 }

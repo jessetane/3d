@@ -69,7 +69,11 @@ module.exports = class Camera3d extends Object3d {
 
   addRenderer (renderer) {
     this.renderers.push(renderer)
-    this.resize()
+    if (this.renderers.length === 1) {
+      this.resize()
+    } else {
+      renderer.resize()
+    }
   }
 
   removeRenderer (renderer) {
