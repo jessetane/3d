@@ -23,6 +23,9 @@ module.exports = class Scene3d extends World {
       this.cameras.push(object)
     }
     this.addBody(object)
+    if (object.connectedCallback) {
+      object.connectedCallback()
+    }
   }
 
   removeObject (object) {
@@ -36,6 +39,9 @@ module.exports = class Scene3d extends World {
       })
     })
     this.removeBody(object)
+    if (object.disconnectedCallback) {
+      object.disconnectedCallback()
+    }
   }
 
   start () {
