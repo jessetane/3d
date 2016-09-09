@@ -3,10 +3,15 @@ var Dynamic = require('regl/lib/dynamic')
 var mat4 = { copy: require('gl-mat4/copy') }
 var E = require('./e')
 
-var reglProp = Dynamic.define.bind(null, 1)
-var reglThis = Dynamic.define.bind(null, 3)
-
 module.exports = class ReglRenderer {
+  static bindProp (name) {
+    return Dynamic.define(1, name)
+  }
+
+  static bindThis (name) {
+    return Dynamic.define(3, name)
+  }
+
   static get defaultVert () {
     return `precision highp float;
       uniform mat4 projection, vantagePoint, transform;
@@ -26,18 +31,18 @@ module.exports = class ReglRenderer {
 
   static get defaultOpts () {
     return {
-      vert: reglThis('vert'),
-      frag: reglThis('frag'),
+      vert: this.bindThis('vert'),
+      frag: this.bindThis('frag'),
       uniforms: {
-        projection: reglProp('projection'),
-        vantagePoint: reglProp('vantagePoint'),
-        transform: reglThis('transform'),
-        color: reglThis('color')
+        projection: this.bindProp('projection'),
+        vantagePoint: this.bindProp('vantagePoint'),
+        transform: this.bindThis('transform'),
+        color: this.bindThis('color')
       },
       attributes: {
-        position: reglThis('positions')
+        position: this.bindThis('positions')
       },
-      elements: reglThis('cells'),
+      elements: this.bindThis('cells')
     }
   }
 
