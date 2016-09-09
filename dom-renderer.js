@@ -58,7 +58,7 @@ module.exports = class DomRenderer {
       if (!object.el) return
       var el = this.elements[object.id] || this.setupElement(object)
 
-      var t = mat4.copy(this.objectTransform, object.transform)
+      var t = mat4.copy(this.objectTransform, object.domTransform || object.transform)
       t[12] *= pixelsPerUnit
       t[13] *= pixelsPerUnit
       t[14] *= pixelsPerUnit
