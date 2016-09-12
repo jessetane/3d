@@ -73,10 +73,10 @@ module.exports = class DomRenderer {
       t[14] *= pixelsPerUnit
       mat4.multiply(t, transform, t)
 
-      el.style.transform = 'translate3d(-50%,-50%,10px) matrix3d(' +
+      el.style.transform = 'translate3d(-50%,-50%,0) matrix3d(' +
         E(t[0])  + ',' + -E(t[1])  + ',' + E(t[2])  + ',' + E(t[3])  + ',' +
-        -E(t[4])  + ',' + E(t[5])  + ',' + E(t[6])  + ',' + -E(t[7])  + ',' +
-        E(t[8])  + ',' + E(t[9])  + ',' + E(t[10]) + ',' + E(t[11]) + ',' +
+        -E(t[4])  + ',' + E(t[5])  + ',' + -E(t[6])  + ',' + -E(t[7])  + ',' +
+        E(t[8])  + ',' + -E(t[9])  + ',' + E(t[10]) + ',' + E(t[11]) + ',' +
         E(t[12]) + ',' + -E(t[13]) + ',' + E(t[14]) + ',' + E(t[15]) + ')'
     })
   }
