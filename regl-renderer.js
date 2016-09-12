@@ -53,13 +53,14 @@ module.exports = class ReglRenderer {
     canvas.style.width = '100%'
     canvas.style.height = '100%'
     this.canvas = canvas
+    this.devicePixelRatio = window.devicePixelRatio
     this.regl = Regl(canvas)
     this.drawCalls = new Map()
     this.projection = []
   }
 
   resize () {
-    var dpr = window.devicePixelRatio
+    var dpr = this.devicePixelRatio
     this.width = this.canvas.offsetWidth
     this.height = this.canvas.offsetHeight
     this.canvas.width = this.width * dpr
