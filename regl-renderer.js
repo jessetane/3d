@@ -65,6 +65,7 @@ module.exports = class ReglRenderer {
     this.height = this.canvas.offsetHeight
     this.canvas.width = this.width * dpr
     this.canvas.height = this.height * dpr
+    this.regl.poll()
   }
 
   addObject (object) {
@@ -86,7 +87,6 @@ module.exports = class ReglRenderer {
 
     var vantagePoint = camera.vantagePoint
 
-    this.regl.poll()
     this.regl.clear({
       depth: 1,
       color: [0, 0, 0, 0]
