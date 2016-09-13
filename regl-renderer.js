@@ -82,6 +82,7 @@ module.exports = class ReglRenderer {
     projection[0] = camera.fitDimension === 'width' ? scale : scale * camera.aspect
     projection[5] = camera.fitDimension === 'width' ? scale * camera.aspect : scale
     projection[10] = -E.value
+    projection[14] = -0.1
 
     var vantagePoint = camera.vantagePoint
 
