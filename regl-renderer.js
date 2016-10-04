@@ -1,17 +1,8 @@
 var Regl = require('regl')
-var Dynamic = require('regl/lib/dynamic')
 var mat4 = { copy: require('gl-mat4/copy') }
 var E = require('./e')
 
 module.exports = class ReglRenderer {
-  static bindProp (name) {
-    return Dynamic.define(1, name)
-  }
-
-  static bindThis (name) {
-    return Dynamic.define(3, name)
-  }
-
   static get defaultVert () {
     return `precision highp float;
       uniform mat4 projection, vantagePoint, transform;
@@ -29,20 +20,20 @@ module.exports = class ReglRenderer {
       }`
   }
 
-  static get defaultOpts () {
+  static getDefaultOpts (regl) {
     return {
-      vert: this.bindThis('vert'),
-      frag: this.bindThis('frag'),
+      vert: regl.this('vert'),
+      frag: regl.this('frag'),
       uniforms: {
-        projection: this.bindProp('projection'),
-        vantagePoint: this.bindProp('vantagePoint'),
-        transform: this.bindThis('transform'),
-        color: this.bindThis('color')
+        projection: regl.prop('projection'),
+        vantagePoint: regl.prop('vantagePoint'),
+        transform: regl.this('transform'),
+        color: regl.this('color')
       },
       attributes: {
-        position: this.bindThis('positions')
+        position: regl.this('positions')
       },
-      elements: this.bindThis('cells')
+      elements: regl.this('cells')
     }
   }
 
@@ -69,8 +60,7 @@ module.exports = class ReglRenderer {
   }
 
   addObject (object) {
-    var draw = this.regl(object.reglOpts)
-    this.drawCalls.set(object, draw)
+    this.drawCalls.set(object, object.createDrawCall(this.regl))
   }
 
   removeObject (object) {
@@ -93,7 +83,7 @@ module.exports = class ReglRenderer {
     })
 
     camera.scene.objects.forEach(object => {
-      if (!object.reglOpts) return
+      if (!object.createDrawCall) return
       var draw = this.drawCalls.get(object)
       if (!draw) {
         this.addObject(object)
