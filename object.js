@@ -10,6 +10,7 @@ module.exports = class Object3d extends Body {
       opts.mass = 1
     }
     super(opts)
+    this.pointerState = 'up'
     this.pointerDown = this.pointerDown.bind(this)
     this.pointerMove = this.pointerMove.bind(this)
     this.pointerUp = this.pointerUp.bind(this)
@@ -71,6 +72,8 @@ module.exports = class Object3d extends Body {
   }
 
   pointerDown (evt) {
+    if (this.pointerState !== 'up') return
+    this.pointerState = 'down'
     evt = this.processEvent(evt)
     evt.type = 'pointerdown'
     evt.origin = this.origin.slice(),
@@ -81,6 +84,7 @@ module.exports = class Object3d extends Body {
   }
 
   pointerMove (evt) {
+    if (this.pointerState !== 'down') return
     evt = this.processEvent(evt)
     evt.type = 'pointermove'
     if (this.pointerStart) {
@@ -93,6 +97,8 @@ module.exports = class Object3d extends Body {
   }
 
   pointerUp (evt) {
+    if (this.pointerState !== 'down') return
+    this.pointerState = 'up'
     evt = this.processEvent(evt)
     evt.type = 'pointerup'
     evt.start = this.pointerStart
@@ -104,9 +110,9 @@ module.exports = class Object3d extends Body {
   }
 
   processEvent (raw) {
-    raw.preventDefault()
     var target = raw.currentTarget
     var evt = {
+      raw,
       currentTarget: target,
       metaKey: raw.metaKey,
       ctrlKey: raw.ctrlKey,

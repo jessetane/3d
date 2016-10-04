@@ -30,12 +30,14 @@ module.exports = class Camera3d extends Object3d {
 
   pointerDown (evt) {
     evt = super.pointerDown(evt)
+    if (!evt) return
     this.angularVelocity.set(0, 0, 0)
     this.touches = [ evt ]
   }
 
   pointerMove (evt) {
     evt = super.pointerMove(evt)
+    if (!evt) return
     var start = evt.start
     if (!start) return
     var w = evt.currentTarget.offsetWidth
@@ -54,14 +56,16 @@ module.exports = class Camera3d extends Object3d {
 
   pointerUp (evt) {
     evt = super.pointerUp(evt)
+    if (!evt) return
+    var isTouch = evt.raw.type.indexOf('touch')
     var a = this.touches[0]
     var b = this.touches[1]
     if (a && b) {
       var dx = a.layerX - b.layerX
       var dy = a.layerY - b.layerY
       if (Math.abs(dx) > 2 || Math.abs(dy) > 2) {
-        dx /= -25
-        dy /= -25
+        dx /= isTouch ? -5 : -12
+        dy /= isTouch ? -5 : -12
         this.angularVelocity.set(dy, dx, 0)
       }
     }
