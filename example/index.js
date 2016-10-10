@@ -11,6 +11,7 @@ class Thing extends Object3d {
     // things for the regl-renderer
     this.vert = ReglRenderer.defaultVert
     this.frag = ReglRenderer.defaultFrag
+    this.createDrawCall = regl => regl(ReglRenderer.getDefaultOpts(regl))
     this.color = [1, 0, 0, 1]
     this.positions = [
       [-0.5, 0.5, 0],
@@ -26,10 +27,6 @@ class Thing extends Object3d {
     this.el.classList.add('thing')
     this.el.style.width = '256px'
     this.el.style.height = '256px'
-  }
-
-  createDrawCall (regl) {
-    return regl(ReglRenderer.getDefaultOpts(regl))
   }
 }
 
