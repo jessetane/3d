@@ -29,7 +29,6 @@ module.exports = class Scene3d extends World {
   }
 
   removeObject (object) {
-    delete object.scene
     if (object.renderers) {
       this.cameras = this.cameras.filter(camera => camera != object)
     }
@@ -42,6 +41,7 @@ module.exports = class Scene3d extends World {
     if (object.disconnectedCallback) {
       object.disconnectedCallback()
     }
+    delete object.scene
   }
 
   start () {
