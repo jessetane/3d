@@ -1,6 +1,6 @@
 {
   "name": "3d",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "cannon.js + regl + matrix3d",
   "scripts": {
     "example": "cd example && dev"
